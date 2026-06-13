@@ -752,28 +752,28 @@
         id: 1, 
         q: "Which core principle of the Object-Oriented Paradigm involves bundling data (attributes) and methods into a single unit while restricting direct external access to preserve data integrity?", 
         options: ["Abstraction", "Inheritance", "Encapsulation", "Polymorphism"], 
-        ans: 2, 
+        ans: 2, // Encapsulation is at index 2
         exp: "Encapsulation acts as a protective shell or capsule that bundles variables and actions together, hiding the internal data from the outside world to protect it from accidental or malicious modification." 
     },
     { 
         id: 2, 
         q: "A developer has written three distinct classes: Student, Teacher, and Administrator. All three classes repeat identical variables for name, email, and phone_number. What architectural design flaw has occurred here?", 
         options: ["Over-generalisation", "Under-generalisation", "Malformed encapsulation", "Excessive modularity"], 
-        ans: 1, 
+        ans: 1, // Under-generalisation is at index 1
         exp: "Under-generalisation occurs when a developer fails to extract shared common traits into a superclass. This creates unnecessary code redundancy and duplicates data across parallel structures." 
     },
     { 
         id: 3, 
         q: "Consider a parent class Animal with a method make_sound(). If subclasses Dog and Cat provide their own unique versions of make_sound() to return 'Bark' and 'Meow', which mechanism is being used?", 
         options: ["Method Overloading", "Method Overriding", "Data Encapsulation", "Interface Implementation"], 
-        ans: 1, 
+        ans: 1, // Method Overriding is at index 1
         exp: "Method overriding occurs when a specialized child class replaces a general method implementation that it inherited from its base superclass with its own custom code logic." 
     },
     { 
         id: 4, 
         q: "In Python class design, what syntactic visibility indicator is used to flag an attribute as strictly 'Private', causing name mangling so that external code cannot easily access or change it directly?", 
         options: ["self.attribute", "self._attribute", "self.__attribute", "self.attribute_private"], 
-        ans: 2, 
+        ans: 2, // self.__attribute is at index 2
         exp: "A double underscore prefix (__) establishes private visibility in Python. This hides the field from direct external modification and changes its internal identifier name to protect the state." 
     },
     { 
@@ -785,14 +785,14 @@
             "They are completely identical and share the exact same reference pointers and attribute states inside memory.", 
             "Classes handle database integrity keys, while instances only handle automated black-box test runs."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "A class represents the static template layout and rule system, while an object/instance is the concrete entity generated at execution time that contains its own unique attribute states inside memory." 
     },
     { 
         id: 6, 
         q: "A system models a University class and a Department class. If the University class is destroyed and the Department instances are immediately destroyed along with it because they cannot exist independently, what relationship style does this represent?", 
         options: ["Aggregation", "Dependency", "Composition", "Generalisation"], 
-        ans: 2, 
+        ans: 2, // Composition is at index 2
         exp: "Composition represents an absolute relationship of strict ownership. The sub-objects are tightly bound to the parent's lifecycle; they are created and destroyed inline with the container instance." 
     },
     { 
@@ -804,7 +804,7 @@
             "Declare all class attributes using public single underscores.", 
             "Implement a runtime loop that changes all variables into composite tracking keys."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "Python utilizes the 'abc' (Abstract Base Classes) library. Inheriting from ABC and marking functions with @abstractmethod prevents instantiation and guarantees that child structures implement those methods." 
     },
     { 
@@ -816,7 +816,7 @@
             "Classes lose all access to inheritance paths and default back to step-by-step procedural styles.", 
             "Data validation safeguards are completely bypassed, compromising data security."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "Over-generalisation occurs when a trait that belongs only to a few select children is wrongly placed in the superclass. This pollutes other subclasses with irrelevant features they don't use or need." 
     },
     { 
@@ -828,7 +828,7 @@
             "To enforce data security and state integrity by protecting fields behind private indicators and running structural validation checks inside setters.", 
             "To automatically convert 1..* cardinality associations into solid composition lines."
         ], 
-        ans: 2, 
+        ans: 2, // The third option is at index 2
         exp: "Accessor methods enforce encapsulation. Setters act as gatekeepers, running conditional checks (e.g., checking if a value is positive or within range bounds) before modifying internal data." 
     },
     { 
@@ -840,7 +840,7 @@
             "The snippet will trigger a syntax error because two methods share the same identifier name.", 
             "The snippet shows a structural aggregation relationship using an open arrow line indicator."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "The subclass overrides the process() method. This relies on dynamic binding (late binding), where the execution environment evaluates the object type instance at runtime to execute the correct method." 
     },
     { 
@@ -852,7 +852,7 @@
             "A solid line with an open, hollow diamond shape connector at the container class end.", 
             "A solid line with a filled black diamond shape connector at the container class end."
         ], 
-        ans: 2, 
+        ans: 2, // A solid line with an open, hollow diamond shape is at index 2
         exp: "An open/hollow diamond represents aggregation (weak ownership), whereas a filled/solid diamond represents composition (absolute lifecycle ownership)." 
     },
     { 
@@ -864,14 +864,14 @@
             "Abstract classes cannot contain any attributes or constructor logic.", 
             "Interfaces utilize solid lines with hollow triangle arrows to show temporary dependencies."
         ], 
-        ans: 0, 
+        ans: 0, // The first option is at index 0
         exp: "An interface defines what methods a class must have without providing any working code bodies or implementation logic. It serves as a pure structural contract." 
     },
     { 
         id: 13, 
         q: "Which level of the software testing hierarchy focuses on verifying isolated component modules, functions, or algorithmic blocks independently to confirm their internal logical calculations operate correctly?", 
         options: ["Integration Testing", "Unit Testing", "Regression Testing", "System Testing"], 
-        ans: 1, 
+        ans: 1, // Unit Testing is at index 1
         exp: "Unit testing involves isolating specific fragments of code (like an individual class method) and testing them in an independent state to verify accuracy before integration." 
     },
     { 
@@ -883,28 +883,28 @@
             "One-to-One (1..1); maintained by enforcing private class methods inside the database engine.", 
             "Dependency association; maintained by a dashed line with an open triangle arrowhead."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "A relationship where one entity links to multiple instances of another is a One-to-Many cardinality. It is linked in relational database schemas using a Foreign Key (FK) in the child table." 
     },
     { 
         id: 15, 
         q: "What type of software validation testing checks the code from an 'opaque' perspective, validating functional inputs against expected outputs without having any knowledge or visibility of the internal source code architecture?", 
         options: ["White Box Testing", "Black Box Testing", "Grey Box Testing", "Unit Integration Testing"], 
-        ans: 1, 
+        ans: 1, // Black Box Testing is at index 1
         exp: "Black box testing treats the software as an opaque container, evaluating only if the inputs generate valid functional outputs according to requirements, without inspecting code logic." 
     },
     { 
         id: 16, 
         q: "Which testing topology validates execution sequences utilizing high-level behavioral inputs while simultaneously analyzing underlying technical relationships or database structure tracking models?", 
         options: ["Black Box Testing", "White Box Testing", "Grey Box Testing", "Automated Regression Pipeline Sweeps"], 
-        ans: 2, 
+        ans: 2, // Grey Box Testing is at index 2
         exp: "Grey box testing combines elements of both. It evaluates user-facing functional pathways (black box) while leveraging knowledge of internal structural database relationships or objects (white box)." 
     },
     { 
         id: 17, 
         q: "When engineers modify an existing class hierarchy structure to add a new feature, they must ensure that the older, pre-existing functional pathways have not been broken or corrupted. What form of testing targets this specific goal?", 
         options: ["Unit Isolation Testing", "Black Box Boundary Evaluation", "Regression Testing", "Task Definition Validation"], 
-        ans: 2, 
+        ans: 2, // Regression Testing is at index 2
         exp: "Regression testing ensures that modifications, optimizations, or newly introduced features have not inadvertently corrupted or broken existing, verified system features." 
     },
     { 
@@ -916,7 +916,7 @@
             "It instantiates an isolated black-box unit testing routine in memory.", 
             "It alters the method binding from dynamic runtime pathways over to static compile-time parameters."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "The super() function allows a child subclass to invoke methods from its parent class. Within a constructor, it guarantees that inherited fields are correctly initialized first." 
     },
     { 
@@ -928,7 +928,7 @@
             "UML Line Style, Arrowhead Vector Coordinates, Cardinality Constraints.", 
             "Python Module Type, Abstract Base Class Indicator, Target Superclass Link."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "A professional manual test case must maintain explicit tracking parameters including ID, description, preconditions, steps, input data, expected vs actual results, and pass/fail status." 
     },
     { 
@@ -940,14 +940,14 @@
             "Inheritance uses a solid line with an open diamond; Implementation uses a dashed line with a solid black diamond.", 
             "They share the exact same style: a solid line with a flat horizontal connector arrow."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "In UML notation, inheritance (generalisation) is mapped using a solid line with a hollow triangle arrowhead pointing up to the parent. Interface implementation (realization) uses a dashed line with a hollow triangle pointing up." 
     },
     { 
         id: 21, 
         q: "Which approach focuses on breaking a large, complex system down from the 'Big Picture' view into progressively smaller, detailed sub-parts or modular class groups?", 
         options: ["Bottom-Up Integration Approach", "Top-Down Decomposition Approach", "Opaque Structural Mutation Approach", "Composite Key Cardinality Alignment"], 
-        ans: 1, 
+        ans: 1, // Top-Down Decomposition Approach is at index 1
         exp: "A top-down approach begins with the highest system architecture level and systematically breaks it down into smaller, granular sub-components (decomposition)." 
     },
     { 
@@ -959,7 +959,7 @@
             "OOAD completely avoids utilizing random runtime memory allocations.", 
             "Procedural architectures are unable to process multi-table primary relational keys."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "The primary goals of the Object-Oriented paradigm are managing architectural complexity, isolating logic flaws via encapsulation, and increasing maintainability through reusable hierarchies." 
     },
     { 
@@ -971,14 +971,14 @@
             "It is Public; anyone can freely read and corrupt the property across any external network framework.", 
             "It is an Interface; it contains no working method bodies or logic statements."
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "A single underscore prefix denotes a protected attribute in Python syntax rules. It serves as an architectural warning to keep out unless operating inside a child subclass." 
     },
     { 
         id: 24, 
         q: "What type of software testing relies on an automated continuous environment pipeline (e.g., GitHub Actions) to instantly run an entire test suite whenever a script commit is pushed?", 
         options: ["Manual Test Case Audit", "Opaque Black Box Input Mapping", "CI/CD Pipeline Automated Testing", "Composite Key Validation Loops"], 
-        ans: 2, 
+        ans: 2, // CI/CD Pipeline Automated Testing is at index 2
         exp: "CI/CD (Continuous Integration / Continuous Deployment) pipelines automate verification loops, executing unit, integration, and regression test suites automatically on every script upload." 
     },
     { 
@@ -990,7 +990,7 @@
             "Late Runtime Dynamic Binding loops", 
             "Under-generalisation redundancy schemas"
         ], 
-        ans: 1, 
+        ans: 1, // The second option is at index 1
         exp: "Foreign keys act as relational pointers connecting entities across tables. They enforce constraints that ensure data integrity, preventing orphan rows and malformed records." 
     }
 ];
