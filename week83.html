@@ -17,6 +17,29 @@
             --sidebar-width: 260px;
         }
 
+        /* --- INTERACTIVE BUTTON AT BOTTOM --- */
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .next-page-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
+            transition: all 0.3s ease;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -780,6 +803,11 @@
 
         </section>
 
+        <div class="btn-container"></div>
+            <a href="exam.html" class="next-page-btn">
+                Proceed to Exam (To test your skills) <i class="fa-solid fa-circle-arrow-right"></i>
+            </a>
+        </div>
     </main>
 
 </body>
