@@ -296,8 +296,10 @@ function removePlayer(index) {
 function updateStartButtonState() {
     const startBtn = document.getElementById('start-game-btn');
     if (players.length >= 3) {
+        // Clear all constraints and reveal the engine trigger seamlessly
         startBtn.removeAttribute('disabled');
         startBtn.classList.remove('hidden');
+        startBtn.classList.remove('dynamic-hide'); 
     } else {
         startBtn.setAttribute('disabled', 'true');
         startBtn.classList.add('hidden');
@@ -327,32 +329,31 @@ function renderPlayerList() {
 }
 
 // --- Core Engine Control Matrix Allocation Logic ---
+// --- Core Engine Control Matrix Allocation Logic ---
 function startGame() {
     const activePool = window.SYNAPSE_MATRIX_POOL;
-    
+
     if (!activePool || activePool.length === 0) {
         alert("CRITICAL MALFUNCTION: Matrix database ('words.js') not detected or is empty.");
         return;
     }
-
+    
     // Select a baseline data category matrix
     currentGameMatrix = activePool[Math.floor(Math.random() * activePool.length)];
-
     const standardUniverseFlip = Math.random() < 0.50;
-    
+
     let nativeInnocentWords = standardUniverseFlip ? [...currentGameMatrix.imposterWords] : [...currentGameMatrix.innocentWords];
     let nativeInnocentHint  = standardUniverseFlip ? currentGameMatrix.imposterHint : currentGameMatrix.innocentHint;
-    
+
     let nativeImposterPool  = standardUniverseFlip ? [...currentGameMatrix.innocentWords] : [...currentGameMatrix.imposterWords];
     let nativeImposterHint  = standardUniverseFlip ? currentGameMatrix.innocentHint : currentGameMatrix.imposterHint;
-
-    // FEATURE 1: Category Inversion Check
+    
+    // FEATURE 1: Category Inversion Check (Safe fallback if missing from layout)
     const categoryInversionCheckbox = document.getElementById('category-inversion-checkbox');
-    const allowCategoryInversion = categoryInversionCheckbox ? categoryInversionCheckbox.checked : true;
+    const allowCategoryInversion = categoryInversionCheckbox ? categoryInversionCheckbox.checked : false; 
     const isCategoryInverted = allowCategoryInversion && (Math.random() < 0.25);
-
+    
     let finalInnocentPool, finalInnocentHint, finalImposterPool, finalImposterHint;
-
     if (isCategoryInverted) {
         finalInnocentPool = [...nativeImposterPool];
         finalInnocentHint = nativeImposterHint;
@@ -365,15 +366,15 @@ function startGame() {
         finalImposterPool = [...nativeImposterPool];
         finalImposterHint = nativeImposterHint;
     }
-
     shuffleArray(finalInnocentPool);
-
-    // FEATURE 2: Chaos Mutation Rate Check
+    
+    // FEATURE 2: Chaos Mutation Rate Check (Fixed null crash element)
     const mutationCheckbox = document.getElementById('mutation-rate-checkbox');
-    const allowMutation = mutationCheckbox ? mutationCheckbox.checked : true;
-    const mutationSetting = parseFloat(document.getElementById('mutation-rate').value || 0);
+    const allowMutation = mutationCheckbox ? mutationCheckbox.checked : false;
+    const mutationElement = document.getElementById('mutation-rate');
+    const mutationSetting = mutationElement ? parseFloat(mutationElement.value || 0) : 0;
     const isMutationTriggered = allowMutation && (Math.random() < mutationSetting);
-
+    
     if (isMutationTriggered && activePool.length > 1) {
         let alternatePool = activePool.filter(matrix => matrix.id !== currentGameMatrix.id);
         let imposterSourceMatrix = alternatePool[Math.floor(Math.random() * alternatePool.length)];
@@ -382,25 +383,25 @@ function startGame() {
         finalImposterHint = structuralMutationFlip ? imposterSourceMatrix.imposterHint : imposterSourceMatrix.innocentHint;
         console.log(`%c[CHAOS MUTATION]: Imposter word isolated from alternative data universe: "${imposterSourceMatrix.id}"`, "color: #ff0055; font-weight: bold;");
     }
-
+    
     shuffleArray(finalImposterPool);
     const chosenImposterWord = finalImposterPool[0] || "PARADOX_SIGNAL";
-
-    // FEATURE 3: Phantom Protocol Check (Fixing the 15% rate math)
-    const phantomCheckbox = document.getElementById('phantom-checkbox');
-    const allowPhantom = phantomCheckbox ? phantomCheckbox.checked : true;
-    const isAllInnocentMatch = allowPhantom && (players.length >= 4) && (Math.random() < 0.15);
     
+    // FEATURE 3: Phantom Protocol Check
+    const phantomCheckbox = document.getElementById('phantom-checkbox');
+    const allowPhantom = phantomCheckbox ? phantomCheckbox.checked : false;
+    const isAllInnocentMatch = allowPhantom && (players.length >= 4) && (Math.random() < 0.15);
+
     const imposterIndex = isAllInnocentMatch ? -1 : Math.floor(Math.random() * players.length);
     if (isAllInnocentMatch) {
         console.log("%c[PHANTOM PROTOCOL]: Ghost threat activated. Everyone is an Innocent Crewmate this match!", "color: #00ff66; font-weight: bold;");
     }
-
+    
     // FEATURE 4: The Paranoiac Check
     const paranoiacCheckbox = document.getElementById('paranoiac-toggle');
-    const allowParanoiac = paranoiacCheckbox ? paranoiacCheckbox.checked : true;
+    const allowParanoiac = paranoiacCheckbox ? paranoiacCheckbox.checked : false;
     const isParanoiacGame = !isAllInnocentMatch && allowParanoiac && (Math.random() < 0.15) && players.length >= 4;
-    
+
     let paranoiacIndex = -1;
     if (isParanoiacGame) {
         do {
@@ -408,15 +409,14 @@ function startGame() {
         } while (paranoiacIndex === imposterIndex);
         console.log(`%c[PARANOIAC CONFIG]: Paranoiac protocol deployed successfully.`, "color: #ffaa00; font-weight: bold;");
     }
-
+    
     // FEATURE 5: Echo Chamber / Mimic Node Check
     const mimicCheckbox = document.getElementById('mimic-checkbox');
-    const allowMimic = mimicCheckbox ? mimicCheckbox.checked : true;
+    const allowMimic = mimicCheckbox ? mimicCheckbox.checked : false;
     const isMimicActive = allowMimic && (players.length >= 4) && (Math.random() < 0.10);
-    
+
     let assignedMimicIndex = -1;
     let mimicTargetIndex = -1;
-
     if (isMimicActive) {
         let clearSlots = players.map((_, i) => i).filter(i => i !== imposterIndex && i !== paranoiacIndex);
         if (clearSlots.length > 0) {
@@ -426,29 +426,29 @@ function startGame() {
             console.log(`%c[MIMIC SIGNAL]: Index ${assignedMimicIndex} is mimicking clues from Index ${mimicTargetIndex}`, "color: #bc00ff; font-weight: bold;");
         }
     }
-
+    
     // FEATURE 6: Static Frequency Sabotage Check
     const staticFrequencyCheckbox = document.getElementById('static-frequency-checkbox');
-    const allowMuting = staticFrequencyCheckbox ? staticFrequencyCheckbox.checked : true;
+    const allowMuting = staticFrequencyCheckbox ? staticFrequencyCheckbox.checked : false;
     const isStaticFrequencyActive = allowMuting && (Math.random() < 0.10);
-    
+
     let assignedMuteIndex = -1;
     if (isStaticFrequencyActive) {
         assignedMuteIndex = Math.floor(Math.random() * players.length);
         console.log(`%c[GLITCH TRAP]: Static Frequency Protocol deployed. Axis assigned to index: ${assignedMuteIndex}`, "color: #ff0055; font-weight: bold;");
     }
-
+    
     // Structure Mapping Engine
     playerRoles = players.map((player, idx) => {
         const isImposter = (idx === imposterIndex);
         const isParanoiac = (idx === paranoiacIndex);
         const isMuted = (idx === assignedMuteIndex);
         const isMimic = (idx === assignedMimicIndex);
-        
+
         let assignedWord = "CORE_NODE";
         let assignedHint = finalInnocentHint;
         let targetName = isMimic ? players[mimicTargetIndex] : null;
-
+        
         if (isImposter) {
             assignedWord = chosenImposterWord;
             assignedHint = finalImposterHint;
@@ -456,17 +456,16 @@ function startGame() {
             assignedWord = "⚠️ SYNAPSE_BLIND_SIGNAL";
             assignedHint = "Your neural interface context is corrupted. You have no data frame. Act normal.";
         } else if (isMimic) {
-            assignedWord = `🔗 MIMIC NODE: ${targetName.toUpperCase()}`;
+            assignedWord = ` 🔗  MIMIC NODE: ${targetName.toUpperCase()}`;
             assignedHint = `You do not possess personal category data. You must mirror the context clues given by ${targetName.toUpperCase()} to survive!`;
         } else {
             assignedWord = finalInnocentPool.pop() || "CORE_NODE";
         }
-
-        // Final fail-safe array format check
+        
         if (!assignedHint || assignedHint === "undefined") {
             assignedHint = currentGameMatrix.category || currentGameMatrix.id || "CLASSIFIED MATRIC ARCHITECTURE";
         }
-        
+
         return {
             name: player,
             word: assignedWord,
@@ -478,7 +477,7 @@ function startGame() {
             mimicTarget: targetName
         };
     });
-
+    
     currentRevealIndex = 0;
     setupNextPlayerReveal();
     switchScreen('reveal');
@@ -489,24 +488,20 @@ function setupNextPlayerReveal() {
     const totalPlayers = playerRoles.length;
     const progressPercent = (currentRevealIndex / totalPlayers) * 100;
     document.getElementById('reveal-progress').style.width = `${progressPercent}%`;
-
     const currentPlayer = playerRoles[currentRevealIndex];
     document.getElementById('current-player-turn').innerText = `${currentPlayer.name.toUpperCase()}'S ARCHITECTURE`;
     
     document.getElementById('secret-data').classList.add('hidden');
-    
-    const peekBtn = document.getElementById('secure-peek-btn');
-    peekBtn.classList.remove('hidden');
-    peekBtn.innerText = "CLICK TO PEEK SECRET NODE";
-    
     document.getElementById('next-player-btn').classList.add('hidden');
-
+    const peekBtn = document.getElementById('secure-peek-btn');
+    peekBtn.classList.remove('hidden', 'secondary');
+    peekBtn.classList.add('warning'); 
+    peekBtn.innerText = "CLICK TO PEEK SECRET NODE";
     document.getElementById('secret-word').innerText = currentPlayer.word;
     document.getElementById('secret-hint').innerText = currentPlayer.hint;
 
     const oldWarning = document.getElementById('static-frequency-warning-container');
     if (oldWarning) oldWarning.remove();
-
     if (currentPlayer.isMuted) {
         const warningBox = document.createElement('div');
         warningBox.id = 'static-frequency-warning-container';
@@ -520,7 +515,8 @@ function setupNextPlayerReveal() {
                 ⚠️ SIGNAL FAULT: STATIC FREQUENCY DETECTED
             </span>
             <p style="color: #fff; margin: 0.5rem 0 0 0; font-size: 0.8rem; line-height: 1.4;">
-                You are strictly forbidden from vocalising spoken words or sounds this match! You must convey your connection clue to the table using only a <span style="color:#ff0055; font-weight:bold; text-transform:uppercase;">single physical gesture or facial expression</span>.
+                You are strictly forbidden from vocalising spoken words or sounds this match!
+                You must convey your connection clue to the table using only a <span style="color:#ff0055; font-weight:bold; text-transform:uppercase;">single physical gesture or facial expression</span>.
             </p>
         `;
         const secretDataBox = document.getElementById('secret-data');
@@ -537,9 +533,36 @@ function toggleSecretDataVisibility() {
         secretData.classList.remove('hidden');
         nextBtn.classList.remove('hidden');
         peekBtn.innerText = "LOCK & CONCEAL SECRET DATA";
+        peekBtn.classList.remove('warning');
+        peekBtn.classList.add('secondary');
     } else {
         secretData.classList.add('hidden');
         peekBtn.innerText = "CLICK TO PEEK SECRET NODE";
+        peekBtn.classList.remove('secondary');
+        peekBtn.classList.add('warning');
+    }
+}
+
+function toggleSecretDataVisibility() {
+    const secretData = document.getElementById('secret-data');
+    const peekBtn = document.getElementById('secure-peek-btn');
+    const nextBtn = document.getElementById('next-player-btn');
+    
+    if (secretData.classList.contains('hidden')) {
+        // STATE 1: Data card is invisible -> Reveal text card, replace/decorate the button
+        secretData.classList.remove('hidden');
+        nextBtn.classList.remove('hidden'); // Ensure the next button is visible to progress
+        
+        peekBtn.innerText = "LOCK & CONCEAL SECRET DATA";
+        peekBtn.classList.remove('warning');
+        peekBtn.classList.add('secondary'); // Swaps to a styled neutral card layout while open
+    } else {
+        // STATE 2: Data card is open -> Collapse it, restore original red warning button state
+        secretData.classList.add('hidden');
+        
+        peekBtn.innerText = "CLICK TO PEEK SECRET NODE";
+        peekBtn.classList.remove('secondary');
+        peekBtn.classList.add('warning'); // Restores the red styling for a fresh peek
     }
 }
 
